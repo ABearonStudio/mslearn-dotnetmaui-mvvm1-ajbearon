@@ -2,21 +2,27 @@ namespace MovieCatalog.Views;
 
 public partial class MoviesListPage : ContentPage
 {
-	public MoviesListPage()
-	{
-		InitializeComponent();
-	}
-
-    private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+    public MoviesListPage()
     {
-		ViewModels.MovieViewModel movie = (ViewModels.MovieViewModel)e.Item;
-		await Navigation.PushAsync(new Views.MovieDetailPage(movie));
+        InitializeComponent();
     }
 
-    private void MenuItem_Clicked(object sender, EventArgs e)
+    private async void CollectionView_SelectionChanged(
+        object sender,
+        SelectionChangedEventArgs e)
     {
-        MenuItem menuItem = (MenuItem)sender;
-        ViewModels.MovieViewModel movie = (ViewModels.MovieViewModel)menuItem.BindingContext;
-        App.MainViewModel?.DeleteMovie(movie);
+        if (e.CurrentSelection.FirstOrDefault() is ViewModels.MovieViewModel movie)
+        {
+            MoviesCollectionView.SelectedItem = null;
+            await Navigation.PushAsync(new MovieDetailPage(movie));
+        }
+    }
+
+    private void SwipeItem_DeleteClicked(object sender, EventArgs e)
+    {
+        if (sender is SwipeItem { BindingContext: ViewModels.MovieViewModel movie })
+        {
+            App.MainViewModel?.DeleteMovie(movie);
+        }
     }
 }
