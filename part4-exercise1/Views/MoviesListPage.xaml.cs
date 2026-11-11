@@ -13,7 +13,6 @@ public partial class MoviesListPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is ViewModels.MovieViewModel movie)
         {
-            MoviesCollectionView.SelectedItem = null;
             await Navigation.PushAsync(new MovieDetailPage(movie));
         }
     }
