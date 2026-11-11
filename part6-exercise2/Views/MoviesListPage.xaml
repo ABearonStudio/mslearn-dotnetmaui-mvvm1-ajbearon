@@ -27,7 +27,6 @@
                         <SwipeItems>
                             <SwipeItem Text="Delete"
                                        BackgroundColor="Red"
-                                       IsDestructive="True"
                                        Clicked="MenuItem_Clicked" />
                         </SwipeItems>
                     </SwipeView.RightItems>
